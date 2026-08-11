@@ -15,3 +15,21 @@ client = Groq(
 
 
 
+def agent(query):
+    response = client.chat.completions.create(
+        model = GROQ_MODEL,
+        messages=[
+            {
+                "role":"user",
+                "content": query
+            }
+        ]
+        
+    )
+
+    return response.choices[0].message.content
+
+query = input("You: ")
+
+answer = agent(query)
+print("Agent:", answer)
