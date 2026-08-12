@@ -2,10 +2,14 @@ from groq import Groq
 
 from app.config.settings import GROQ_API_KEY,GROQ_MODEL
 
+from app.executor.executor import ToolExecutor
+
+
 class Agent:
     def __init__(self):
         self.client = Groq(api_key=GROQ_API_KEY)
         self.model = GROQ_MODEL
+        self.tool_executor = ToolExecutor()
 
     def get_tools(self):
         return [
