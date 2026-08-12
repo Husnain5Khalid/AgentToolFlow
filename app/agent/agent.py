@@ -61,3 +61,23 @@ class Agent:
                 }
             }
         ]
+
+    def run(self, query:str):
+        messages = [
+        {
+            "role":"user",
+            "content": query,
+        }
+        ]
+
+        response = self.client.chat.completions.create(
+            model=self.model,
+            messages=messages,
+            tools=self.get_tools(),
+            tool_choice="auto",
+
+        )
+        return response
+    
+
+    
