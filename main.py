@@ -1,36 +1,15 @@
-import os
-from dotenv import load_dotenv
-from groq import Groq
+from app.agent.agent import Agent
 
-load_dotenv()
+def main():
+    agent = Agent()
+    query = input("You: ")
 
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_MODEL = os.getenv("GROQ_MODEL")
+    response = agent.run(query)
 
-# Create GRoq Client
-
-client = Groq(
-    api_key = GROQ_API_KEY
-)
+    print(response)
 
 
+if __name__ == "__main__":
+    main()
 
-def agent(query):
-    response = client.chat.completions.create(
-        model = GROQ_MODEL,
-        messages=[
-            {
-                "role":"user",
-                "content": query
-            }
-        ]
-        
-    )
-
-    return response.choices[0].message.content
-
-query = input("You: ")
-
-answer = agent(query)
-print("Agent:", answer)
-
+    
