@@ -81,7 +81,22 @@ class Agent:
             tool_choice="auto",
 
         )
-        return response
+        assistant_message = response.choices[0].message
+
+        if not assistant_message.tool_calls:
+            return assistant_message.content
+
+        for tool_call in assistant_message.tool_calls:
+            tool_name = tool_call.function.name
+            arguments = tool_call.function.arguments
+
+            result = self.tool_executor.execute(
+                tool_name,
+                arguments,
+            )
+
+            print(f"Tool called: {tool_name}")
+            print(f"Tool result: {result}")
     
 
     
